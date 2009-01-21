@@ -17,11 +17,22 @@ In Linux
 ln -s ~/.vim/vimrc.linux ~/.vimrc
 </code></pre>
 
-In cygwin
+In Cygwin
 <pre><code>
-ln -s ~/.vim/vimrc.win ~/.vimrc
+ln -s ~/.vim/vimrc.windows ~/.vimrc
 </code></pre>
 
+In Windows
+<pre><code>
+cd %HOME%
+copy .vim vimfiles
+cd vimfiles
+
+vim after\plugin\snippets.vim +":%s/.vim/vimfiles/g" +":x!" 
+vim plugin\fuzzyfinder_textmate.vim +":%s/.vim/vimfiles/g" +":x!" 
+
+copy /y vimrc.windows ..\_vimrc
+</code></pre>
 
 h1. References
 
