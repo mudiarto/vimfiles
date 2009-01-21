@@ -40,7 +40,7 @@ let g:miniBufExplModSelTarget = 1
 let g:rails_default_file='config/database.yml'
  
 set nocompatible          " We're running Vim, not Vi!
-set guifont=monaco
+set guifont="Bitstream Vera Sans Mono"
 set guitablabel=%M%t
 set nobackup
 set nowritebackup
@@ -101,7 +101,7 @@ inoremap <C-L> <C-O>:nohls<CR>
 nnoremap <C-B> :BufExplorer<cr>
 
 "map to fuzzy finder text mate stylez
-nnoremap <c-f> :FuzzyFinderTextMate<CR>
+nnoremap <c-t> :FuzzyFinderTextMate<CR>
 
 "map Q to something useful
 noremap Q gq
