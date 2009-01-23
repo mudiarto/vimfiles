@@ -38,7 +38,7 @@ let g:miniBufExplModSelTarget = 1
  
 " Change which file opens after executing :Rails command
 let g:rails_default_file='config/database.yml'
- 
+
 set nocompatible          " We're running Vim, not Vi!
 set guifont=Consolas:h12
 set guitablabel=%M%t
@@ -155,6 +155,9 @@ set cindent
 set autoindent
 set smarttab
 set expandtab
+
+set ignorecase
+set smartcase
 
 let g:rubycomplete_buffer_loading = 1
 let g:rubycomplete_classes_in_global = 1
