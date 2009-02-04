@@ -56,7 +56,7 @@ map <C-//> map ,# :s/^/#/<CR>
 map <S-//> :s/^\/\/\\|^--\\|^> \\|^[#"%!;]//<CR><Esc>:nohlsearch<CR>
 imap <M-Up> :tabn<CR>
 imap <M-Down> :tabp<CR>
-imap <c-s> <esc><c-s>
+"imap <c-s> <esc><c-s>
 
 set guioptions-=T
 if has("gui_running")
@@ -107,7 +107,7 @@ nnoremap <c-t> :FuzzyFinderTextMate<CR>
 noremap Q gq
 
 "make Y consistent with C and D
-nnoremap Y y$
+"nnoremap Y y$
 
 map <leader>b :FuzzyFinderBuffer<CR>
 map <leader>] :FuzzyFinderMruFile<CR>
@@ -155,6 +155,9 @@ set cindent
 set autoindent
 set smarttab
 set expandtab
+
+set ignorecase
+set smartcase
 
 let g:rubycomplete_buffer_loading = 1
 let g:rubycomplete_classes_in_global = 1
@@ -245,11 +248,6 @@ function! <SID>AvailableTemplates(lead, cmdline, cursorpos)
     "chop off the templateDir from each file
     return map(files, 'strpart(v:val,strlen(templateDir))')
 endfunction
-
-" CTRL-R reloads the ~/.vimrc file
-nnoremap <C-R> :source ~/.vimrc
-inoremap <C-R> <C-O>:source ~/.vimrc
-vnoremap <C-R> <C-C>:source ~/.vimrc
 
 " CTRL-T and CTRL-D indent and unindent blocks
 inoremap <C-D> <C-O><LT><LT>
