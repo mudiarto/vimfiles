@@ -38,7 +38,7 @@ let g:miniBufExplModSelTarget = 1
  
 " Change which file opens after executing :Rails command
 let g:rails_default_file='config/database.yml'
- 
+
 set nocompatible          " We're running Vim, not Vi!
 set guifont=Consolas:h12
 set guitablabel=%M%t
