@@ -47,7 +47,7 @@ set nowritebackup
 set path=$PWD/public/**,$PWD/**
 filetype plugin indent on " Enable filetype-specific indenting and plugins
 set sessionoptions=blank,buffers,curdir,folds,help,resize,tabpages,winsize
-set guioptions-=m
+set guioptions-=T
 set statusline=%<%f\ %h%m%r%=%-20.(line=%l,col=%c%V,totlin=%L%)\%h%m%r%=%-40(,%n%Y%)\%P
 set laststatus=2
 
@@ -56,9 +56,8 @@ map <C-//> map ,# :s/^/#/<CR>
 map <S-//> :s/^\/\/\\|^--\\|^> \\|^[#"%!;]//<CR><Esc>:nohlsearch<CR>
 imap <M-Up> :tabn<CR>
 imap <M-Down> :tabp<CR>
-imap <c-s> <esc><c-s>
+"imap <c-s> <esc><c-s>
 
-set guioptions-=T
 if has("gui_running")
   "tell the term has 256 colors
   set t_Co=256
@@ -155,6 +154,9 @@ set cindent
 set autoindent
 set smarttab
 set expandtab
+
+set ignorecase
+set smartcase
 
 let g:rubycomplete_buffer_loading = 1
 let g:rubycomplete_classes_in_global = 1
