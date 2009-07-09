@@ -1,3 +1,6 @@
+let mapleader=","
+set hidden
+
 autocmd FileType python set omnifunc=pythoncomplete#Complete
 autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
@@ -97,7 +100,8 @@ nnoremap <C-L> :nohls<CR><C-L>
 inoremap <C-L> <C-O>:nohls<CR>
 
 "map to fuzzy finder text mate stylez
-nnoremap <c-t> :FuzzyFinderTextMate<CR>
+"nnoremap <c-t> :FuzzyFinderTextMate<CR>
+"nnoremap <c-t> :FuzzyFinderTextMate<CR>
 let g:fuzzy_ignore = "gems/*"
 
 "map Q to something useful
@@ -106,16 +110,17 @@ noremap Q gq
 "make Y consistent with C and D
 "nnoremap Y y$
 
+map <leader>t :FuzzyFinderTextMate<CR>
 map <leader>b :FuzzyFinderBuffer<CR>
 map <leader>] :FuzzyFinderMruFile<CR>
 map <leader>r :ruby finder.rescan!<CR>
-map ,t :Rake<CR>
+"map ,t :Rake<CR>
 
 let g:proj_flags="imstg"
 let g:fuzzy_ceiling=20000
 let g:fuzzy_matching_limit=25
 let g:fuzzy_ignore = "gems/*, log/*"
-set cursorline
+"set cursorline
 
 "folding settings
 set foldmethod=indent   "fold based on indent
@@ -133,7 +138,7 @@ set sidescroll=1
 
 set cf  " Enable error files & error jumping.
 set clipboard+=unnamed  " Yanks go on clipboard instead.
-set history=256  " Number of things to remember in history.
+set history=1000  " Number of things to remember in history.
 set autowrite  " Writes on make/shell commands
 set ruler  " Ruler on
 set nu  " Line numbers on
