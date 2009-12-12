@@ -6,20 +6,30 @@ if you're using Windows, C:\Documents and Settings\Your_User
 <pre><code>
 git clone git://github.com/kevincolyar/vimfiles.git .vim
 </code></pre>
+Clone this repo into your home directory either as .vim (linux) or vimfiles (MF
+Windows).
 
 In OSX
 <pre><code>
 ln -s ~/.vim/vimrc.osx ~/.vimrc
 </code></pre>
+Then cd into the repo and run this to get the snippets submodule:
 
 In Linux
 <pre><code>
 ln -s ~/.vim/vimrc.linux ~/.vimrc
 </code></pre>
+git submodule init
+git submodule update
+</code></pre>
 
 In Cygwin
 <pre><code>
 ln -s ~/.vim/vimrc.windows ~/.vimrc
+Put this in your vimrc along with your personal hacks:
+<pre><code>
+source ~/.vim/vimrc      "linux
+source ~/vimfiles/vimrc  "windows
 </code></pre>
 
 In Windows
