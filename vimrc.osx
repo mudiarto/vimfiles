@@ -1,65 +1,214 @@
-let mapleader=","
-set hidden
+"Use Vim settings, rather then Vi settings (much better!).
+"This must be first, because it changes other options as a side effect.
+set nocompatible
 
-autocmd FileType python set omnifunc=pythoncomplete#Complete
-autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
-autocmd FileType css set omnifunc=csscomplete#CompleteCSS
-autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
-autocmd FileType php set omnifunc=phpcomplete#CompletePHP
-autocmd FileType c set omnifunc=ccomplete#Complete
-autocmd FileType ruby,eruby set omnifunc=rubycomplete#Complete
-autocmd FileType ruby,perl,tex set shiftwidth=2
- 
-autocmd FileType c,cpp,java,javascript,python,xml,xhtml,html set shiftwidth=2
- 
-augroup filetypedetect
-  au! BufNewFile,BufRead *.ch setf cheat
-  au BufNewFile,BufRead *.liquid setf liquid
-  au! BufRead,BufNewFile *.haml setfiletype haml
-  autocmd BufNewFile,BufRead *.yml setf eruby
-augroup END
- 
-autocmd BufNewFile,BufRead *_test.rb source ~/.vim/ftplugin/shoulda.vim
-"use \rci in normal mode to indent ruby code,should install kode ,sudo gem
-"install kode
-nmap <leader>rci :%!ruby-code-indenter<cr>
- 
-autocmd FileType ruby,eruby set omnifunc=rubycomplete#Complete
-autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
-autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
-autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
-" Load matchit (% to bounce from do to end, etc.)
-runtime! plugin/matchit.vim
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""
- 
-" Minibuffer Explorer Settings
-let g:miniBufExplMapWindowNavVim = 1
-let g:miniBufExplMapWindowNavArrows = 1
-let g:miniBufExplMapCTabSwitchBufs = 1
-let g:miniBufExplModSelTarget = 1
- 
-" Change which file opens after executing :Rails command
-let g:rails_default_file='config/database.yml'
- 
-set nocompatible          " We're running Vim, not Vi!
-set guifont=Monaco:h12
-set guitablabel=%M%t
-set nobackup
-set nowritebackup
-set path=$PWD/public/**,$PWD/**
-filetype plugin indent on " Enable filetype-specific indenting and plugins
-set sessionoptions=blank,buffers,curdir,folds,help,resize,tabpages,winsize
-set guioptions-=m
-set statusline=%<%f\ %h%m%r%=%-20.(line=%l,col=%c%V,totlin=%L%)\%h%m%r%=%-40(,%n%Y%)\%P
+"allow backspacing over everything in insert mode
+set backspace=indent,eol,start
+
+"store lots of :cmdline history
+set history=1000
+
+set showcmd     "show incomplete cmds down the bottom
+set showmode    "show current mode down the bottom
+
+set incsearch   "find the next match as we type the search
+"set hlsearch    "hilight searches by default
+
+set nowrap      "dont wrap lines
+set linebreak   "wrap lines at convenient points
+
+"statusline setup
+set statusline=%f       "tail of the filename
+
+"display a warning if fileformat isnt unix
+set statusline+=%#warningmsg#
+set statusline+=%{&ff!='unix'?'['.&ff.']':''}
+set statusline+=%*
+
+"display a warning if file encoding isnt utf-8
+set statusline+=%#warningmsg#
+set statusline+=%{(&fenc!='utf-8'&&&fenc!='')?'['.&fenc.']':''}
+set statusline+=%*
+
+set statusline+=%h      "help file flag
+set statusline+=%y      "filetype
+set statusline+=%r      "read only flag
+set statusline+=%m      "modified flag
+
+"display a warning if &et is wrong, or we have mixed-indenting
+set statusline+=%#error#
+set statusline+=%{StatuslineTabWarning()}
+set statusline+=%*
+
+set statusline+=%{StatuslineTrailingSpaceWarning()}
+
+set statusline+=%{StatuslineLongLineWarning()}
+
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+"display a warning if &paste is set
+set statusline+=%#error#
+set statusline+=%{&paste?'[paste]':''}
+set statusline+=%*
+
+set statusline+=%=      "left/right separator
+set statusline+=%{StatuslineCurrentHighlight()}\ \ "current highlight
+set statusline+=%c,     "cursor column
+set statusline+=%l/%L   "cursor line/total lines
+set statusline+=\ %P    "percent through file
 set laststatus=2
 
-map <C-q> :mksession! ~/.vim/.session <cr>
-map <C-//> map ,# :s/^/#/<CR>
-map <S-//> :s/^\/\/\\|^--\\|^> \\|^[#"%!;]//<CR><Esc>:nohlsearch<CR>
-imap <M-Up> :tabn<CR>
-imap <M-Down> :tabp<CR>
-"imap <c-s> <esc><c-s>
+"recalculate the trailing whitespace warning when idle, and after saving
+autocmd cursorhold,bufwritepost * unlet! b:statusline_trailing_space_warning
+
+"return '[\s]' if trailing white space is detected
+"return '' otherwise
+function! StatuslineTrailingSpaceWarning()
+    if !exists("b:statusline_trailing_space_warning")
+        if search('\s\+$', 'nw') != 0
+            let b:statusline_trailing_space_warning = '[\s]'
+        else
+            let b:statusline_trailing_space_warning = ''
+        endif
+    endif
+    return b:statusline_trailing_space_warning
+endfunction
+
+
+"return the syntax highlight group under the cursor ''
+function! StatuslineCurrentHighlight()
+    let name = synIDattr(synID(line('.'),col('.'),1),'name')
+    if name == ''
+        return ''
+    else
+        return '[' . name . ']'
+    endif
+endfunction
+
+"recalculate the tab warning flag when idle and after writing
+autocmd cursorhold,bufwritepost * unlet! b:statusline_tab_warning
+
+"return '[&et]' if &et is set wrong
+"return '[mixed-indenting]' if spaces and tabs are used to indent
+"return an empty string if everything is fine
+function! StatuslineTabWarning()
+    if !exists("b:statusline_tab_warning")
+        let tabs = search('^\t', 'nw') != 0
+        let spaces = search('^ ', 'nw') != 0
+
+        if tabs && spaces
+            let b:statusline_tab_warning =  '[mixed-indenting]'
+        elseif (spaces && !&et) || (tabs && &et)
+            let b:statusline_tab_warning = '[&et]'
+        else
+            let b:statusline_tab_warning = ''
+        endif
+    endif
+    return b:statusline_tab_warning
+endfunction
+
+"recalculate the long line warning when idle and after saving
+autocmd cursorhold,bufwritepost * unlet! b:statusline_long_line_warning
+
+"return a warning for "long lines" where "long" is either &textwidth or 80 (if
+"no &textwidth is set)
+"
+"return '' if no long lines
+"return '[#x,my,$z] if long lines are found, were x is the number of long
+"lines, y is the median length of the long lines and z is the length of the
+"longest line
+function! StatuslineLongLineWarning()
+    if !exists("b:statusline_long_line_warning")
+        let long_line_lens = s:LongLines()
+
+        if len(long_line_lens) > 0
+            let b:statusline_long_line_warning = "[" .
+                        \ '#' . len(long_line_lens) . "," .
+                        \ 'm' . s:Median(long_line_lens) . "," .
+                        \ '$' . max(long_line_lens) . "]"
+        else
+            let b:statusline_long_line_warning = ""
+        endif
+    endif
+    return b:statusline_long_line_warning
+endfunction
+
+"return a list containing the lengths of the long lines in this buffer
+function! s:LongLines()
+    let threshold = (&tw ? &tw : 80)
+    let spaces = repeat(" ", &ts)
+
+    let long_line_lens = []
+
+    let i = 1
+    while i <= line("$")
+        let len = strlen(substitute(getline(i), '\t', spaces, 'g'))
+        if len > threshold
+            call add(long_line_lens, len)
+        endif
+        let i += 1
+    endwhile
+
+    return long_line_lens
+endfunction
+
+"find the median of the given array of numbers
+function! s:Median(nums)
+    let nums = sort(a:nums)
+    let l = len(nums)
+
+    if l % 2 == 1
+        let i = (l-1) / 2
+        return nums[i]
+    else
+        return (nums[l/2] + nums[(l/2)-1]) / 2
+    endif
+endfunction
+
+"indent settings
+set shiftwidth=4
+set softtabstop=4
+set expandtab
+set autoindent
+
+"folding settings
+set foldmethod=indent   "fold based on indent
+set foldnestmax=3       "deepest fold is 3 levels
+set nofoldenable        "dont fold by default
+
+set wildmode=list:longest   "make cmdline tab completion similar to bash
+set wildmenu                "enable ctrl-n and ctrl-p to scroll thru matches
+set wildignore=*.o,*.obj,*~ "stuff to ignore when tab completing
+
+"display tabs and trailing spaces
+set list
+set listchars=tab:\ \ ,extends:>,precedes:<
+
+set formatoptions-=o "dont continue comments when pushing o/O
+
+"vertical/horizontal scroll off settings
+set scrolloff=3
+set sidescrolloff=7
+set sidescroll=1
+
+"load ftplugins and indent files
+filetype plugin on
+filetype indent on
+
+"turn on syntax highlighting
+syntax on
+
+"some stuff to get the mouse going in term
+set mouse=a
+set ttymouse=xterm2
+
+"tell the term has 256 colors
+"set t_Co=256
+
+"hide buffers when not displayed
+set hidden
 
 set guioptions-=T
 if has("gui_running")
@@ -79,20 +228,9 @@ if $COLORTERM == 'gnome-terminal'
   colorscheme desert
 else
   colorscheme desert
+  "set guifont=Menlo:h15
+  set guifont=Monaco:h12
 endif
-
-syntax on                 " Enable syntax highlighting
- 
-" Load matchit (% to bounce from do to end, etc.)
-runtime! macros/matchit.vim
-set nonumber
- 
-augroup myfiletypes
-  " Clear old autocmds in group
-  autocmd!
-  " autoindent with two spaces, always expand tabs
-  autocmd FileType ruby,eruby,yaml set ai sw=2 sts=2 et
-augroup END
 
 nmap <silent> <Leader>p :NERDTreeToggle<CR>
 
@@ -100,90 +238,41 @@ nmap <silent> <Leader>p :NERDTreeToggle<CR>
 nnoremap <C-L> :nohls<CR><C-L>
 inoremap <C-L> <C-O>:nohls<CR>
 
+"map to bufexplorer
+nnoremap <C-B> :BufExplorer<cr>
+
 "map to fuzzy finder text mate stylez
-"nnoremap <c-t> :FuzzyFinderTextMate<CR>
-"nnoremap <c-t> :FuzzyFinderTextMate<CR>
-let g:fuzzy_ignore = "gems/*"
+nnoremap <c-f> :FuzzyFinderTextMate<CR>
+map <leader>r :ruby finder.rescan!<CR>
 
 "map Q to something useful
 noremap Q gq
 
 "make Y consistent with C and D
-"nnoremap Y y$
+nnoremap Y y$
 
-map <leader>t :FuzzyFinderTextMate<CR>
-map <leader>b :FuzzyFinderBuffer<CR>
-map <leader>] :FuzzyFinderMruFile<CR>
-map <leader>r :ruby finder.rescan!<CR>
-"map ,t :Rake<CR>
+"mark syntax errors with :signs
+let g:syntastic_enable_signs=1
 
-let g:proj_flags="imstg"
-let g:fuzzy_ceiling=20000
-let g:fuzzy_matching_limit=25
-let g:fuzzy_ignore = "gems/*, log/*"
-"set cursorline
+"snipmate setup
+try
+  source ~/.vim/snippets/support_functions.vim
+catch
+  source $HOMEPATH\vimfiles\snippets\support_functions.vim
+endtry
+autocmd vimenter * call s:SetupSnippets()
+function! s:SetupSnippets()
 
-"folding settings
-set foldmethod=indent   "fold based on indent
-set foldnestmax=3       "deepest fold is 3 levels
-set nofoldenable        "dont fold by default
+    "if we're in a rails env then read in the rails snippets
+    if filereadable("./config/environment.rb")
+        call ExtractSnips("~/.vim/snippets/ruby-rails", "ruby")
+        call ExtractSnips("~/.vim/snippets/eruby-rails", "eruby")
+    endif
 
-set wildmode=list:longest   "make cmdline tab completion similar to bash
-set wildmenu                "enable ctrl-n and ctrl-p to scroll thru matches
-set wildignore=*.o,*.obj,*~ "stuff to ignore when tab completing
-
-"vertical/horizontal scroll off settings
-set scrolloff=3
-set sidescrolloff=7
-set sidescroll=1
-
-set cf  " Enable error files & error jumping.
-set clipboard+=unnamed  " Yanks go on clipboard instead.
-set history=1000  " Number of things to remember in history.
-set autowrite  " Writes on make/shell commands
-set ruler  " Ruler on
-set nu  " Line numbers on
-set nowrap  " Line wrapping off
-set timeoutlen=250  " Time to wait after ESC (default causes an annoying delay)
- 
-" Formatting (some of these are for coding in C and C++)
-set ts=2  " Tabs are 2 spaces
-set bs=2  " Backspace over everything in insert mode
-set shiftwidth=2  " Tabs under smart indent
-set nocp incsearch
-set cinoptions=:0,p0,t0
-set cinwords=if,else,while,do,for,switch,case
-set formatoptions=tcqr
-set cindent
-set autoindent
-set smarttab
-set expandtab
-
-set ignorecase
-set smartcase
-
-let g:rubycomplete_buffer_loading = 1
-let g:rubycomplete_classes_in_global = 1
-let g:rubycomplete_rails = 1
-let g:SuperTabDefaultCompletionType = "<C-X><C-O>"
-" BEGIN rails-toolkit settings
-runtime debian.vim
-runtime macros/rails-toolkit.vim
-" " END rails-toolkit setting
-
-" Visual
-set showmatch  " Show matching brackets.
-set mat=5  " Bracket blinking.
-set list
-" Show $ at end of line and trailing space as ~
-set lcs=tab:\ \ ,extends:>,precedes:<
-set novisualbell  " No blinking .
-set noerrorbells  " No noise.
-set laststatus=2  " Always show status line.
- 
-" gvim specific
-set mousehide  " Hide mouse after chars typed
-"set mouse=a  " Mouse in all modes
+    call ExtractSnips("~/.vim/snippets/html", "eruby")
+    call ExtractSnips("~/.vim/snippets/html", "xhtml")
+    call ExtractSnips("~/.vim/snippets/html", "php")
+endfunction
 
 "visual search mappings
 function! s:VSetSearch()
@@ -202,70 +291,20 @@ autocmd BufReadPost * call SetCursorPosition()
 function! SetCursorPosition()
     if &filetype !~ 'commit\c'
         if line("'\"") > 0 && line("'\"") <= line("$")
-            exe "normal g`\""
+            exe "normal! g`\""
+            normal! zz
         endif
     end
 endfunction
 
-"define :Lorem command to dump in a paragraph of lorem ipsum
-command! -nargs=0 Lorem :normal iLorem ipsum dolor sit amet, consectetur
-      \ adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
-      \ magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-      \ ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-      \ irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-      \ fugiat nulla pariatur.  Excepteur sint occaecat cupidatat non
-      \ proident, sunt in culpa qui officia deserunt mollit anim id est
-      \ laborum
-
-"define :HighlightExcessColumns command to highlight the offending parts of
-"lines that are "too long". where "too long" is defined by &textwidth or an
-"arg passed to the command
-command! -nargs=? HighlightExcessColumns call s:HighlightExcessColumns('<args>')
-function! s:HighlightExcessColumns(width)
-    let targetWidth = a:width != '' ? a:width : &textwidth
+"define :HighlightLongLines command to highlight the offending parts of
+"lines that are longer than the specified length (defaulting to 80)
+command! -nargs=? HighlightLongLines call s:HighlightLongLines('<args>')
+function! s:HighlightLongLines(width)
+    let targetWidth = a:width != '' ? a:width : 79
     if targetWidth > 0
-        exec 'match Todo /\%>' . (targetWidth+1) . 'v/'
+        exec 'match Todo /\%>' . (targetWidth) . 'v/'
     else
-        echomsg "HighlightExcessColumns: set a &textwidth, or pass one in"
+        echomsg "Usage: HighlightLongLines [natural number]"
     endif
 endfunction
-
-"simple template system
-command! -complete=customlist,<SID>AvailableTemplates -n=1
-            \ Template :call <SID>InsertTemplate('<args>')
-
-function! <SID>InsertTemplate(name)
-    "read in the template
-    execute 'read ~/.vim/templates/' . &filetype . '/' . a:name
-
-    "if the cursor was previously on a blank line, delete it
-    if getline(line(".")-1) =~ '^\s*$'
-        exec line(".")-1 . 'd'
-    endif
-endfunction
-
-function! <SID>AvailableTemplates(lead, cmdline, cursorpos)
-    let templateDir = expand('~/.vim/templates/' . &filetype . '/')
-    let files = split(globpath(templateDir, a:lead . '*'), '\n')
-
-    "chop off the templateDir from each file
-    return map(files, 'strpart(v:val,strlen(templateDir))')
-endfunction
-
-" CTRL-Z undoes even in visual/selection mode
-vnoremap <C-Z> <C-C>
-
-let g:browser = 'firefox -new-tab '     
-" Open the Ruby ApiDock page for the word under cursor, in a new Firefox tab
-function! OpenRubyDoc(keyword)
-  let url = 'http://apidock.com/ruby/'.a:keyword
-  exec '!'.g:browser.' '.url.' &'
-endfunction           
-noremap RB :call OpenRubyDoc(expand('<cword>'))<CR>
-
-" Open the Rails ApiDock page for the word under cursos, in a new Firefox tab
-function! OpenRailsDoc(keyword)
-  let url = 'http://apidock.com/rails/'.a:keyword
-  exec '!'.g:browser.' '.url.' &'
-endfunction
-noremap RR :call OpenRailsDoc(expand('<cword>'))<CR>
