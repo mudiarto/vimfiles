@@ -63,6 +63,9 @@ set statusline+=%l/%L   "cursor line/total lines
 set statusline+=\ %P    "percent through file
 set laststatus=2
 
+" Use visual bell instead of audible bell
+set vb
+
 "recalculate the trailing whitespace warning when idle, and after saving
 autocmd cursorhold,bufwritepost * unlet! b:statusline_trailing_space_warning
 
@@ -216,9 +219,9 @@ if has("gui_running")
 
     if has("gui_gnome")
         set term=gnome-256color
-        colorscheme desert
+        colorscheme xoria256
     else
-        colorscheme desert
+        colorscheme xoria256
         set guitablabel=%M%t
     endif
     if has("gui_mac") || has("gui_macvim")
