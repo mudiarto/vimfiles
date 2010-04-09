@@ -277,8 +277,8 @@ imap <C-l> <Space>=><Space>
 nnoremap <C-B> :BufExplorer<cr>
 
 "map to fuzzy finder text mate stylez
-nnoremap <c-f> :FuzzyFinderTextMate<CR>
-nnoremap <c-g> :ruby finder.rescan!<CR>
+"nnoremap <c-f> :FuzzyFinderTextMate<CR>
+"nnoremap <c-g> :ruby finder.rescan!<CR>
 
 let g:fuzzy_ignore = "*.png;*.PNG;*.jpg;*.JPG;*.gif;*.GIF;vender/**;coverage/**;tmp/**;rdoc/**"
 
