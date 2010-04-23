@@ -5,6 +5,8 @@ set nocompatible
 let mapleader = ","
 
 set guioptions-=m
+set number
+set cursorline
 
 "allow backspacing over everything in insert mode
 set backspace=indent,eol,start
@@ -25,6 +27,8 @@ set ignorecase  "Ignore case in searches
 set nohlsearch  "Turn off highlighting when done searching:w
 
 set tags=./tags
+
+set dictionary+=/usr/share/dict/words
 
 " Using ack instead of grep
 set grepprg=ack
@@ -214,6 +218,7 @@ set nofoldenable        "dont fold by default
 set wildmode=list:longest   "make cmdline tab completion similar to bash
 set wildmenu                "enable ctrl-n and ctrl-p to scroll thru matches
 set wildignore=*.o,*.obj,*~ "stuff to ignore when tab completing
+set wildignore+=vendor/rails/**
 
 "display tabs and trailing spaces
 "set list

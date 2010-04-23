@@ -2,6 +2,12 @@
 "This must be first, because it changes other options as a side effect.
 set nocompatible
 
+let mapleader = ","
+
+set guioptions-=m
+set number
+set cursorline
+
 "allow backspacing over everything in insert mode
 set backspace=indent,eol,start
 
@@ -19,6 +25,13 @@ set linebreak   "wrap lines at convenient points
 
 set ignorecase  "Ignore case in searches
 set nohlsearch  "Turn off highlighting when done searching:w
+
+set tags=./tags
+
+set dictionary+=/usr/share/dict/words
+
+" Using ack instead of grep
+set grepprg=ack
 
 "statusline setup
 set statusline=%f       "tail of the filename
@@ -63,8 +76,29 @@ set statusline+=%l/%L   "cursor line/total lines
 set statusline+=\ %P    "percent through file
 set laststatus=2
 
+" Use visual bell instead of audible bell
+set vb
+
+" Shortcut to rapidly toggle `set list`
+nmap <leader>l :set list!<CR>
+
+nnoremap <C-n> :cn<cr>
+nnoremap <C-p> :cp<cr>
+
+" Use the same symbols as TextMate for tabstops and EOLs
+set listchars=tab:▸\ ,eol:¬
+
+" Ruby focused unit test vim plugin
+map <silent> <LocalLeader>rb :RunAllRubyTests<CR>
+map <silent> <LocalLeader>rc :RunRubyFocusedContext<CR>
+map <silent> <LocalLeader>rf :RunRubyFocusedUnitTest<CR>
+
 "recalculate the trailing whitespace warning when idle, and after saving
 autocmd cursorhold,bufwritepost * unlet! b:statusline_trailing_space_warning
+
+" Spell checking and wrapping for text files
+autocmd BufNewFile,BufRead *.txt set wrap
+autocmd BufNewFile,BufRead *.txt set spell
 
 "return '[\s]' if trailing white space is detected
 "return '' otherwise
@@ -184,10 +218,11 @@ set nofoldenable        "dont fold by default
 set wildmode=list:longest   "make cmdline tab completion similar to bash
 set wildmenu                "enable ctrl-n and ctrl-p to scroll thru matches
 set wildignore=*.o,*.obj,*~ "stuff to ignore when tab completing
+set wildignore+=vendor/rails/**
 
 "display tabs and trailing spaces
-set list
-set listchars=tab:\ \ ,extends:>,precedes:<
+"set list
+"set listchars=tab:\ \ ,extends:>,precedes:<
 
 set formatoptions-=o "dont continue comments when pushing o/O
 
@@ -216,9 +251,9 @@ if has("gui_running")
 
     if has("gui_gnome")
         set term=gnome-256color
-        colorscheme desert
+        colorscheme mustang
     else
-        colorscheme desert
+        colorscheme mustang
         set guitablabel=%M%t
     endif
     if has("gui_mac") || has("gui_macvim")
@@ -234,18 +269,26 @@ else
     let g:CSApprox_loaded = 1
 endif
 
-let mapleader = ","
-nmap <silent> <Leader>p :NERDTreeToggle<CR>
+nmap <silent> <Leader>o :NERDTreeToggle<CR>
 
 "make <c-l> clear the highlight as well as redraw
-nnoremap <C-L> :nohls<CR><C-L>
-inoremap <C-L> <C-O>:nohls<CR>
+"nnoremap <C-L> :nohls<CR><C-L>
+"inoremap <C-L> <C-O>:nohls<CR>
+"
+" bind control-l to hashrocket
+imap <C-l> <Space>=><Space>
 
 "map to bufexplorer
 nnoremap <C-B> :BufExplorer<cr>
 
 "map to fuzzy finder text mate stylez
-nnoremap <c-f> :FuzzyFinderTextMate<CR>
+"nnoremap <c-f> :FuzzyFinderTextMate<CR>
+"nnoremap <c-g> :ruby finder.rescan!<CR>
+
+let g:fuzzy_ignore = "*.png;*.PNG;*.jpg;*.JPG;*.gif;*.GIF;vender/**;coverage/**;tmp/**;rdoc/**"
+
+"map ot ack
+nnoremap <c-a> :Ack 
 
 "map Q to something useful
 noremap Q gq
