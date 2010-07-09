@@ -2,6 +2,9 @@
 "This must be first, because it changes other options as a side effect.
 set nocompatible
 
+" Pathogen: Load all plugins in the bundle directory
+call pathogen#runtime_append_all_bundles() 
+
 let mapleader = ","
 
 set guioptions-=mT
@@ -379,3 +382,7 @@ function! s:HighlightLongLines(width)
         echomsg "Usage: HighlightLongLines [natural number]"
     endif
 endfunction
+
+" MakeRedGreen
+autocmd BufNewFile,BufRead *_spec.rb compiler rspec
+map <Leader>] <Plug>MakeGreen 
