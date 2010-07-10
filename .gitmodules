@@ -82,3 +82,6 @@
 [submodule "bundle/vim-syntastic"]
   path = bundle/vim-syntastic
   url = http://github.com/scrooloose/syntastic.git
+[submodule "bundle/vim-cocoa"]
+	path = bundle/vim-cocoa
+	url = http://github.com/msanders/cocoa.vim.git
