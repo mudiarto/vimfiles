@@ -8,8 +8,7 @@ call pathogen#helptags()
 
 let mapleader = ","
 
-set guioptions-=m
-set guioptions-=T
+set guioptions-=mT
 set number
 set cursorline
 
@@ -90,6 +89,10 @@ set laststatus=2
 
 " Use visual bell instead of audible bell
 set vb
+
+" Abbreviations
+ab nname Kevin Colyar
+ab eemail kevin@colyar.net
 
 " Shortcut to rapidly toggle `set list`
 nmap <leader>l :set list!<CR>
