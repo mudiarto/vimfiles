@@ -85,3 +85,9 @@
 [submodule "bundle/vim-cocoa"]
 	path = bundle/vim-cocoa
 	url = http://github.com/msanders/cocoa.vim.git
+[submodule "bundle/vim-twitvim"]
+	path = bundle/vim-twitvim
+	url = http://github.com/developwithpassion/twitvim.git
+[submodule "bundle/vim-slurper"]
+	path = bundle/vim-slurper
+	url = http://github.com/alowe/vim-slurper.git
