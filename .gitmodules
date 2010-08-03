@@ -68,8 +68,8 @@
   path = bundle/vim-csapprox
   url = http://github.com/godlygeek/csapprox.git
 [submodule "bundle/vim-conque"]
-  path = bundle/vim-conque
-  url = http://github.com/ornicar/vim-conque.git
+	path = bundle/vim-conque
+	url = http://github.com/rson/vim-conque.git
 [submodule "bundle/vim-snipmate"]
   path = bundle/vim-snipmate
   url = http://github.com/msanders/snipmate.vim.git
