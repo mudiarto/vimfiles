@@ -3,3 +3,5 @@ tags
 *.swp
 .DS_Store
 .VimballRecord
+view
+.netrwhist
