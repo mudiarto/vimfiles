@@ -101,6 +101,12 @@ set vb
 " Abbreviations
 ab nname Kevin Colyar
 ab eemail kevin@colyar.net
+ab pphone (509) 264-3110 
+ab ttasks - Read bible<CR>- Practice typing<CR>- Watch Kahn Academy<CR>- Exercise
+
+iabbrev <buffer> ddate <C-R>=strftime("%Y-%m-%d")<CR>
+iabbrev <buffer> ttime <C-R>=strftime("%H:%M:%S")<CR>
+iabbrev <buffer> ddatetime <C-R>=strftime("%Y-%m-%d  %H:%M:%S")<CR>
 
 " Shortcut to rapidly toggle `set list`
 nmap <leader>l :set list!<CR>
