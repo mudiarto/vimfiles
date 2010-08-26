@@ -94,3 +94,6 @@
 [submodule "snippets"]
 	path = snippets
 	url = git@github.com:kevincolyar/snipmate-snippets.git
+[submodule "bundle/vim-snipmate"]
+	path = bundle/vim-snipmate
+	url = git@github.com:kevincolyar/snipmate.vim.git
