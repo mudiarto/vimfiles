@@ -76,9 +76,6 @@
 [submodule "bundle/vim-slurper"]
 	path = bundle/vim-slurper
 	url = http://github.com/alowe/vim-slurper.git
-[submodule "bundle/vim-autoclose"]
-  path = bundle/vim-autoclose
-  url = http://github.com/Townk/vim-autoclose.git
 [submodule "bundle/vim-cucumber"]
 	path = bundle/vim-cucumber
 	url = http://github.com/tpope/vim-cucumber.git
@@ -88,3 +85,6 @@
 [submodule "bundle/vim-snipmate"]
 	path = bundle/vim-snipmate
 	url = git@github.com:kevincolyar/snipmate.vim.git
+[submodule "bundle/vim-delimitmate"]
+	path = bundle/vim-delimitmate
+	url = http://github.com/Raimondi/delimitMate.git
