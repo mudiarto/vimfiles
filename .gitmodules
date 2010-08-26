@@ -67,9 +67,6 @@
 [submodule "bundle/vim-conque"]
 	path = bundle/vim-conque
 	url = http://github.com/rson/vim-conque.git
-[submodule "bundle/vim-snipmate"]
-	path = bundle/vim-snipmate
-	url = http://github.com/msanders/snipmate.vim.git
 [submodule "bundle/vim-tcomment"]
 	path = bundle/vim-tcomment
 	url = http://github.com/tsaleh/vim-tcomment.git
