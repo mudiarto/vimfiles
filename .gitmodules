@@ -88,3 +88,9 @@
 [submodule "bundle/vim-delimitmate"]
 	path = bundle/vim-delimitmate
 	url = http://github.com/Raimondi/delimitMate.git
+[submodule "bundle/vim-matchit"]
+	path = bundle/vim-matchit
+	url = http://github.com/edsono/vim-matchit.git
+[submodule "bundle/vim-repeat"]
+	path = bundle/vim-repeat
+	url = http://github.com/tpope/vim-repeat.git
