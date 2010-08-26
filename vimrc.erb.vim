@@ -117,6 +117,8 @@ nnoremap <Leader>a :Ack <C-r><C-w>
 " Refresh CommandT search index
 nnoremap <Leader>f :CommandTFlush<CR>
 
+map <Leader>] <Plug>MakeGreen 
+
 nnoremap <C-n> :cn<cr>
 nnoremap <C-p> :cp<cr>
 
