@@ -21,7 +21,7 @@ end
 namespace :generate do
   task :vimrc do
     file = "vimrc.erb.vim"
-    File.open(File.join(ENV['HOME'], ".#{file.sub('.erb.vim', '')}"), 'w') do |new_file|
+    File.open(File.join(ENV['HOME'], "#{file.sub('.erb.vim', '')}"), 'w') do |new_file|
       new_file.write ERB.new(File.read(file)).result(binding)
     end
   end

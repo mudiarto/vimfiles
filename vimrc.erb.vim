@@ -108,9 +108,6 @@ iabbrev <buffer> ddate <C-R>=strftime("%Y-%m-%d")<CR>
 iabbrev <buffer> ttime <C-R>=strftime("%H:%M:%S")<CR>
 iabbrev <buffer> ddatetime <C-R>=strftime("%Y-%m-%d  %H:%M:%S")<CR>
 
-" Shortcut to rapidly toggle `set list`
-nmap <leader>l :set list!<CR>
-
 " Replace all instance of word under cursor
 nnoremap <Leader>s :%s/\<<C-r><C-w>\>/
 
@@ -122,9 +119,6 @@ nnoremap <Leader>f :CommandTFlush<CR>
 
 nnoremap <C-n> :cn<cr>
 nnoremap <C-p> :cp<cr>
-
-" Use the same symbols as TextMate for tabstops and EOLs
-set listchars=tab:▸\ ,eol:¬
 
 "recalculate the trailing whitespace warning when idle, and after saving
 autocmd cursorhold,bufwritepost * unlet! b:statusline_trailing_space_warning
