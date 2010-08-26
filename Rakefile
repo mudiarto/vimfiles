@@ -8,7 +8,7 @@ end
 
 task :links do
   system("rm ~/.vimrc")
-  system("ln -s ./vimrc ~/.vimrc")
+  system("ln -s ~/.vim/vimrc ~/.vimrc")
 end
 
 namespace :git do
