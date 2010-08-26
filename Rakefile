@@ -3,7 +3,7 @@ require 'erb'
 
 task :default => :install
 
-task :install => ['git:submodules', 'generate:vimrc','links'] do
+task :install => ['git:submodules', 'generate:vimrc','links', 'install:commandt'] do
 end
 
 task :links do
@@ -26,3 +26,10 @@ namespace :generate do
     end
   end
 end
+
+namespace :install do
+  task :commandt do
+   system("cd ~/.vim/bundle/vim-commandt/ruby/command-t && ruby extconf.rb && make")
+  end
+end
+
