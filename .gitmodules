@@ -25,12 +25,6 @@
 [submodule "bundle/vim-endwise"]
 	path = bundle/vim-endwise
 	url = http://github.com/tpope/vim-endwise.git
-[submodule "bundle/vim-supertab"]
-	path = bundle/vim-supertab
-	url = http://github.com/tsaleh/vim-supertab.git
-[submodule "bundle/vim-tabular"]
-	path = bundle/vim-tabular
-	url = http://github.com/godlygeek/tabular.git
 [submodule "bundle/vim-makegreen"]
 	path = bundle/vim-makegreen
 	url = http://github.com/reinh/vim-makegreen.git
@@ -49,9 +43,6 @@
 [submodule "bundle/vim-css/syntax"]
 	path = bundle/vim-css/syntax
 	url = http://github.com/xenoterracide/css.vim.git
-[submodule "bundle/vim-nerdcommenter"]
-	path = bundle/vim-nerdcommenter
-	url = http://github.com/scrooloose/nerdcommenter.git
 [submodule "bundle/vim-ack"]
   path = bundle/vim-ack
   url = http://github.com/mileszs/ack.vim.git
