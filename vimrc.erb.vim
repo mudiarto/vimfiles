@@ -46,8 +46,8 @@ set grepprg=ack
 set clipboard=unnamed
 
 " Setup back directory, where all .sw* files are kept
-set backupdir=/var/tmp/
-set directory=/var/tmp/
+" set backupdir=/var/tmp/
+" set directory=/var/tmp/
 
 "statusline setup
 set statusline=%f       "tail of the filename
@@ -79,9 +79,13 @@ set statusline+=%{StatuslineTrailingSpaceWarning()}
 
 set statusline+=%{StatuslineLongLineWarning()}
 
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
+" set statusline+=%#warningmsg#
+" set statusline+=%{SyntasticStatuslineFlag()}
+" set statusline+=%*
+" 
+" "mark syntax errors with :signs
+" let g:syntastic_enable_signs=1
+
 
 "display a warning if &paste is set
 set statusline+=%#error#
@@ -305,6 +309,7 @@ else
 endif
 
 nmap <silent> <Leader>o :NERDTreeToggle<CR>
+let NERDTreeWinSize=50
 
 "make <c-l> clear the highlight as well as redraw
 "nnoremap <C-L> :nohls<CR><C-L>
@@ -321,9 +326,6 @@ nnoremap <c-a> :Ack
 
 "make Y consistent with C and D
 nnoremap Y y$
-
-"mark syntax errors with :signs
-let g:syntastic_enable_signs=1
 
 "snipmate setup
 try
