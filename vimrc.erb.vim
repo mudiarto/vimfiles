@@ -6,12 +6,17 @@ set nocompatible
 call pathogen#runtime_append_all_bundles() 
 call pathogen#helptags()
 
+let localvimrc_sandbox=0
+
 let mapleader = ","
 
 set guioptions-=m
 set guioptions-=T
 set number
 set cursorline
+
+" Save when losing focus "
+au FocusLost * :wa
 
 "allow backspacing over everything in insert mode
 set backspace=indent,eol,start
@@ -106,7 +111,6 @@ set vb
 ab nname Kevin Colyar
 ab eemail kevin@colyar.net
 ab pphone (509) 264-3110 
-ab ttasks - Read bible<CR>- Practice typing<CR>- Watch Kahn Academy<CR>- Exercise
 
 iabbrev <buffer> ddate <C-R>=strftime("%Y-%m-%d")<CR>
 iabbrev <buffer> ttime <C-R>=strftime("%H:%M:%S")<CR>
@@ -120,6 +124,9 @@ nnoremap <Leader>a :Ack <C-r><C-w>
 
 " Refresh CommandT search index
 nnoremap <Leader>f :CommandTFlush<CR>
+
+" Run currrent file
+nnoremap <Leader>r :! ./%<CR>
 
 map <Leader>] <Plug>MakeGreen 
 

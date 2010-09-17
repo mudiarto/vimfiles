@@ -94,3 +94,6 @@
 [submodule "bundle/vim-repeat"]
 	path = bundle/vim-repeat
 	url = http://github.com/tpope/vim-repeat.git
+[submodule "bundle/vim-localvimc"]
+	path = bundle/vim-localvimc
+	url = http://github.com/vim-scripts/localvimrc.git
