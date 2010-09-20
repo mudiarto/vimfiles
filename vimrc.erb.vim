@@ -133,6 +133,16 @@ map <Leader>] <Plug>MakeGreen
 nnoremap <C-n> :cn<cr>
 nnoremap <C-p> :cp<cr>
 
+" Navigating Splits
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+
+" Map jj to ESC
+inoremap jj <ESC>
+
+
 "recalculate the trailing whitespace warning when idle, and after saving
 autocmd cursorhold,bufwritepost * unlet! b:statusline_trailing_space_warning
 
