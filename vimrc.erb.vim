@@ -12,8 +12,8 @@ let mapleader = ","
 
 set guioptions-=m
 set guioptions-=T
-set number
-set cursorline
+set nonumber
+set nocursorline
 
 " Save when losing focus "
 au FocusLost * :wa
@@ -108,9 +108,9 @@ set laststatus=2
 set vb
 
 " Abbreviations
-ab nname Kevin Colyar
-ab eemail kevin@colyar.net
-ab pphone (509) 264-3110 
+ab nname Kusno Mudiarto
+ab eemail kusno@mudiarto.com
+ab pphone (858) 848-5868
 
 iabbrev <buffer> ddate <C-R>=strftime("%Y-%m-%d")<CR>
 iabbrev <buffer> ttime <C-R>=strftime("%H:%M:%S")<CR>
@@ -314,15 +314,17 @@ if has("gui_running")
     endif
     if has("gui_mac") || has("gui_macvim")
         "set guifont=Menlo:h12
-        set guifont=Monaco:h12
+        "set guifont=Monaco:h12
+        set guifont=ProggySquare:h11.00
     endif
     if has("gui_win32") || has("gui_win32s")
         set guifont=Consolas:h12
-				set enc=utf-8
+        set enc=utf-8
     endif
 else
-		"dont load csapprox if we no gui support - silences an annoying warning
+    "dont load csapprox if we no gui support - silences an annoying warning
     let g:CSApprox_loaded = 1
+    colorscheme ps_color
 endif
 
 nmap <silent> <Leader>o :NERDTreeToggle<CR>

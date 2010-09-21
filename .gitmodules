@@ -81,10 +81,10 @@
 	url = http://github.com/tpope/vim-cucumber.git
 [submodule "snippets"]
 	path = snippets
-	url = git@github.com:kevincolyar/snipmate-snippets.git
+ 	url = http://github.com/kevincolyar/snipmate-snippets.git
 [submodule "bundle/vim-snipmate"]
 	path = bundle/vim-snipmate
-	url = git@github.com:kevincolyar/snipmate.vim.git
+	url = http://github.com/kevincolyar/snipmate.vim.git
 [submodule "bundle/vim-delimitmate"]
 	path = bundle/vim-delimitmate
 	url = http://github.com/Raimondi/delimitMate.git
